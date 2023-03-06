@@ -8,7 +8,8 @@ public class UserTest {
 
     private static final String CORRECT_LOGIN = "login";
     private static final String CORRECT_EMAIL = "login@mail.ru";
-    private static final String CORRECT_ADDRESS = "@mail.ru";
+    private static final String INCORRECT_EMAIL = "lucyMail.ru";
+    private static final String INCORRECT_LOGIN = "login@mail.ru";
 
 
     @Test
@@ -27,13 +28,11 @@ public class UserTest {
 
     @Test
     public void correctTypeOfEmailAddress(){
-        User user = new User(CORRECT_LOGIN, CORRECT_EMAIL);
-        Assertions.assertTrue(user.getEmail().contains(CORRECT_ADDRESS));
+        Assertions.assertThrows(IllegalArgumentException.class, ()-> new User(CORRECT_LOGIN, INCORRECT_EMAIL));
     }
 
     @Test
     public void checkThatLoginAndEmailNotSame(){
-        User user = new User(CORRECT_LOGIN, CORRECT_EMAIL);
-        Assertions.assertNotEquals(user.getEmail(), user.getLogin());
+        Assertions.assertThrows(IllegalArgumentException.class, ()->new User(INCORRECT_LOGIN, CORRECT_EMAIL));
     }
 }
